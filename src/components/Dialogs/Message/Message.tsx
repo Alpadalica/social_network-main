@@ -6,8 +6,6 @@ export type MessageType = {
     message: string
 }
 
-
-
 const Message = (props: MessageType) => {
     return (
         <div>
