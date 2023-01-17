@@ -6,6 +6,7 @@ import {PostType} from "../../redux/state";
 
 type ProfilePropsType = {
     MyPostsPropsType: Array<PostType>
+    addPostCallBack: (message: string) => void
 }
 
 
@@ -14,7 +15,7 @@ const Profile = (props: ProfilePropsType) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts PropsPostsType={props.MyPostsPropsType}/>
+            <MyPosts PropsPostsType={props.MyPostsPropsType} addPostCallBack={props.addPostCallBack}/>
         </div>
     );
 };
