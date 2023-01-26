@@ -1,29 +1,37 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {PostType} from "../../../redux/state";
+import {DialogPageType, PostType, updateNewPostText} from "../../../redux/state";
 
 export type PropsPostsType = {
     PropsPostsType: Array<PostType>
-    addPostCallBack: (message: string) => void
+    addPost: () => void
+    newPostText: string
+    updateNewPostText: (newText: string) => void
 }
 
 const MyPosts = (props: PropsPostsType) => {
-    let postsElements =
-        props.PropsPostsType.map((p)=> <Post message={p.message} likesCount={p.likesCount} id={p.id}/>)
-    let newPostElement = React.createRef<HTMLTextAreaElement>();
+    const postsElements =
+        props.PropsPostsType.map
+        ((p) => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
-    let addPost = () => {
-        if (newPostElement.current) {
-            props.addPostCallBack(newPostElement.current.value)
-        }
+    const addPost = () => {
+        props.addPost()
     }
+
+    const updateNewPostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.updateNewPostText(e.currentTarget.value)
+    }
+
     return (
         <div className={s.PostsBlock}>
             <h3>my post</h3>
             <div>
                 <div>
-                    <textarea ref={newPostElement}></textarea>
+                    <textarea
+                        placeholder='Write something...'
+                        onChange={updateNewPostText}
+                        value={props.newPostText}/>
                 </div>
                 <div>
                     <button onClick={addPost}>Add Post</button>
