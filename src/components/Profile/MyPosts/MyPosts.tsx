@@ -1,13 +1,12 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {DialogPageType, PostType, updateNewPostText} from "../../../redux/state";
+import {ActionsType, addPostAC, changeNewTextAC, PostType,} from "../../../redux/state";
 
 export type PropsPostsType = {
     PropsPostsType: Array<PostType>
-    addPost: () => void
     newPostText: string
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionsType) => void
 }
 
 const MyPosts = (props: PropsPostsType) => {
@@ -16,11 +15,11 @@ const MyPosts = (props: PropsPostsType) => {
         ((p) => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     const addPost = () => {
-        props.addPost()
+        props.dispatch(addPostAC(props.newPostText))
     }
 
     const updateNewPostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewPostText(e.currentTarget.value)
+        props.dispatch(changeNewTextAC(e.currentTarget.value))
     }
 
     return (
